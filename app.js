@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('20 4 * * *', () => {
+cron.schedule('25 4 * * *', () => {
 
 
 const CURRENT_DATE = new Date();
