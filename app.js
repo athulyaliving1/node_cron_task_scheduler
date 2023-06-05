@@ -74,12 +74,14 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('25 4 * * *', () => {
+cron.schedule('45 4 * * *', () => {
 
 
 const CURRENT_DATE = new Date();
 
   console.log(CURRENT_DATE);
+
+  let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
@@ -92,6 +94,7 @@ const CURRENT_DATE = new Date();
 
     // Pass the fetched data to the HTML template
     const mailOptions = {
+      from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
       subject: "OTP for registration is:",
       html: `
