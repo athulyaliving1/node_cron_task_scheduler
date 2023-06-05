@@ -177,9 +177,9 @@ app.get("/leads", (req, res) => {
 
   console.log(CURRENT_DATE);
 
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
+  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
-  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '${CURRENT_DATE}%'`;
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '${CURRENT_DATE}%'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
