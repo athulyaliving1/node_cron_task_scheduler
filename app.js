@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('45 4 * * *', () => {
+cron.schedule('50 6 * * *', () => {
 
 
 const CURRENT_DATE = new Date();
@@ -173,7 +173,7 @@ const CURRENT_DATE = new Date();
 
 
 app.get("/leads", (req, res) => {
-  
+
   const CURRENT_DATE = new Date();
 
   console.log(CURRENT_DATE);
