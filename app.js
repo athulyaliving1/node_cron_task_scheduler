@@ -173,20 +173,25 @@ const CURRENT_DATE = new Date();
 
 
 app.get("/leads", (req, res) => {
+  
   const CURRENT_DATE = new Date();
 
   console.log(CURRENT_DATE);
 
-  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
+  let fromid = 'noreply@athulyaseniorcare.com';
+
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '${CURRENT_DATE}%'`;
+  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
+
     if (err) throw err;
 
     // Pass the fetched data to the HTML template
     const mailOptions = {
+      from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
       subject: "OTP for registration is:",
       html: `
@@ -261,7 +266,6 @@ app.get("/leads", (req, res) => {
     });
   });
 });
-
 
 
 
