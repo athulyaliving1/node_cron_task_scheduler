@@ -193,7 +193,7 @@ app.get("/leads", (req, res) => {
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
-      subject: "OTP for registration is:",
+      subject: "Daily report:",
       html: `
         <html>
           <head>
