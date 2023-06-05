@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('50 6 * * *', () => {
+cron.schedule('00 01 * * *', () => {
 
 
 const CURRENT_DATE = new Date();
@@ -261,7 +261,9 @@ app.get("/leads", (req, res) => {
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        // res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        res.status(200).json({ status: "SUCCESS" });
+
       }
     });
   });
