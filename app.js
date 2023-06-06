@@ -64,18 +64,13 @@ contactEmail.verify((error) => {
 });
 
 
-
 // conn.connect((err) => {
 //   if (err) throw err;
 //   console.log("MySQL connected");
 // });
 
 
-
-
-
-
-cron.schedule('31 12 * * *', () => {
+cron.schedule('*/5 * * * *', () => {
   let fromid = 'noreply@athulyaseniorcare.com';
   const currentDate = new Date();
   const formattedDates = currentDate.toISOString().slice(0, 10);
@@ -170,10 +165,6 @@ cron.schedule('31 12 * * *', () => {
     });
   });
 });
-
-
-
-
 
 
 
