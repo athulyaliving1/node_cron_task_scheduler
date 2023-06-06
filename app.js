@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('15 11 * * *', () => {
+cron.schedule('47 5 * * *', () => {
 
 
  // Get the current date and time in IST
