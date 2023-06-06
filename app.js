@@ -199,7 +199,7 @@ app.get("/leads", (req, res) => {
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
   // Replace the placeholder in the SQL query with the current date
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
