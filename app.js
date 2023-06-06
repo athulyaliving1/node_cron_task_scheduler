@@ -111,7 +111,7 @@ cron.schedule('0 6 * * *', () => {
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
-      subject: "OTP for registration is:",
+      subject: "Daily update Cron:",
       html: `
         <html>
           <head>
@@ -198,6 +198,8 @@ const targetDate = new Date(currentDate.getTime() + 5 * 60 * 60 * 1000 + 30 * 60
 const formattedDate = targetDate.toISOString().slice(0, 10);
 
 console.log(formattedDate);
+var datetime = new Date();
+console.log(datetime);
 let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
@@ -234,7 +236,7 @@ let fromid = 'noreply@athulyaseniorcare.com';
             </style>
           </head>
           <body>
-            <h1>Daily Report</h1>
+            <h1>Daily Report </h1>
             <table>
               <thead>
                 <tr>
@@ -244,6 +246,7 @@ let fromid = 'noreply@athulyaseniorcare.com';
                   <th>Department</th>
                   <th>Details</th>
                   <th>Pending</th>
+                  <th>current time</th>
                 </tr>
               </thead>
               <tbody>
@@ -260,6 +263,8 @@ let fromid = 'noreply@athulyaseniorcare.com';
                           <td>${row.department}</td>
                           <td>${row.details}</td>
                           <td>${row.pending}</td>
+                          <td>${row.pending}</td>
+
                         </tr>
                       `;
                     }
