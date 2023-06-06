@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('30 5 * * *', () => {
+cron.schedule('15 11 * * *', () => {
 
 
  // Get the current date and time in IST
@@ -99,7 +99,8 @@ cron.schedule('30 5 * * *', () => {
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
   // Replace the placeholder in the SQL query with the current date
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
+  // let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
+  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
