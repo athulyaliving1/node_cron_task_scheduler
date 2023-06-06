@@ -6,7 +6,7 @@ var logger = require('morgan');
 var mysql = require('mysql');
 const nodemailer = require("nodemailer");
 var cron = require('node-cron');
-
+const moment = require('moment-timezone');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -74,18 +74,32 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('00 01 * * *', () => {
+cron.schedule('15 18 * * *', () => {
 
 
-const CURRENT_DATE = new Date();
+ // Get the current date and time in IST
+//  const nowIST = moment.tz('Asia/Kolkata');
 
-  console.log(CURRENT_DATE);
+//  // Convert the date and time to GMT
+//  const nowGMT = nowIST.clone().tz('GMT');
+
+//  // Format the GMT date and time
+//  const gmtDateTime = nowGMT.format('YYYY-MM-DD HH:mm:ss');
+
+//  console.log('IST:', nowIST.format('YYYY-MM-DD HH:mm:ss'));
+//  console.log('GMT:', gmtDateTime);
 
   let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
-  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
+  const currentDate = new Date();
+
+  // Format the current date as 'YYYY-MM-DD'
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+  
+  // Replace the placeholder in the SQL query with the current date
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
@@ -178,7 +192,12 @@ app.get("/leads", (req, res) => {
 
   console.log(CURRENT_DATE);
 
-  let fromid = 'noreply@athulyaseniorcare.com';
+const currentDate = new Date();
+const targetDate = new Date(currentDate.getTime() + 5 * 60 * 60 * 1000 + 30 * 60 * 1000);
+const formattedDate = targetDate.toISOString().slice(0, 10);
+
+console.log(formattedDate);
+let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
