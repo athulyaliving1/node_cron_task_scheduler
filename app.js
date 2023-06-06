@@ -74,44 +74,30 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('0 1 * * *', () => {
 
-
- // Get the current date and time in IST
-//  const nowIST = moment.tz('Asia/Kolkata');
-
-//  // Convert the date and time to GMT
-//  const nowGMT = nowIST.clone().tz('GMT');
-
-//  // Format the GMT date and time
-//  const gmtDateTime = nowGMT.format('YYYY-MM-DD HH:mm:ss');
-
-//  console.log('IST:', nowIST.format('YYYY-MM-DD HH:mm:ss'));
-//  console.log('GMT:', gmtDateTime);
-
+cron.schedule('31 12 * * *', () => {
   let fromid = 'noreply@athulyaseniorcare.com';
-
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
-  
   const currentDate = new Date();
-
-  // Format the current date as 'YYYY-MM-DD'
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
-  // Replace the placeholder in the SQL query with the current date
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+  
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
-
     if (err) throw err;
+
+    // Remove HTML tags from the data
+    result.forEach(row => {
+      row.details = row.details.replace(/<\/?[^>]+(>|$)/g, "");
+      row.pending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
+    });
 
     // Pass the fetched data to the HTML template
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
-      subject: "Daily update Cron:",
+      subject: "OTP for registration is:",
       html: `
         <html>
           <head>
@@ -185,6 +171,208 @@ cron.schedule('0 1 * * *', () => {
   });
 });
 
+
+
+
+
+
+
+
+
+cron.schedule('*/30 * * * *', () => {
+
+  let fromid = 'noreply@athulyaseniorcare.com';
+
+ 
+  
+  const currentDate = new Date();
+
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+  
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+  
+    
+  console.log(sql);
+  let query = conn.query(sql, (err, result) => {
+
+    if (err) throw err;
+
+    // Pass the fetched data to the HTML template
+    const mailOptions = {
+      from: `${fromid}`,
+      to: 'muthukumar@athulyaliving.com',
+      subject: "Daily update Cron:",
+      html: `
+        <html>
+          <head>
+            <style>
+              table {
+                border: 1px solid #333;
+                border-collapse: collapse;
+                width: 100%;
+              }
+              th, td {
+                border: 1px solid #333;
+                padding: 8px;
+                text-align: left;
+              }
+              th {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+              <body>
+              <h1>Daily Report</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Department</th>
+                    <th>Details</th>
+                    <th>Pending</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${result
+                    .map(row => {
+                      const date = new Date(row.date);
+                      const formattedDate = date.toISOString().slice(0, 10);
+                      const details = row.details.replace(/<[^>]+>/g, '');
+                      const pending = row.pending.replace(/<[^>]+>/g, '');
+                      return `
+                        <tr>
+                          <td>${row.id}</td>
+                          <td>${row.name}</td>
+                          <td>${formattedDate}</td>
+                          <td>${row.department}</td>
+                          <td>${details}</td>
+                          <td>${pending}</td>
+                        </tr>
+                      `;
+                    })
+                    .join('')}
+                </tbody>
+              </table>
+            </body>
+            </table>
+          </body>
+        </html>
+      `,
+    };
+
+    // Send the email with the HTML template
+    contactEmail.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json({ status: "ERROR" });
+      } else {
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+        res.send(JSON.stringify({ status: 200, error: null, response: result }));
+      }
+    });
+  });
+});
+
+cron.schedule('11 3 * * *', () => {
+  let fromid = 'noreply@athulyaseniorcare.com';
+  const currentDate = new Date();
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+
+  console.log(sql);
+  let query = conn.query(sql, (err, result) => {
+    if (err) throw err;
+
+    // Remove HTML tags from the data
+    result.forEach(row => {
+      row.details = row.details.replace(/<\/?[^>]+(>|$)/g, "");
+      row.pending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
+    });
+
+    // Pass the fetched data to the HTML template
+    const mailOptions = {
+      from: `${fromid}`,
+      to: 'muthukumar@athulyaliving.com',
+      subject: "OTP for registration is:",
+      html: `
+        <html>
+          <head>
+            <style>
+              table {
+                border: 1px solid #333;
+                border-collapse: collapse;
+                width: 100%;
+              }
+              th, td {
+                border: 1px solid #333;
+                padding: 8px;
+                text-align: left;
+              }
+              th {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Daily Report</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Department</th>
+                  <th>Details</th>
+                  <th>Pending</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${result
+                  .map(
+                    row => {
+                      const date = new Date(row.date);
+                      const formattedDate = date.toISOString().slice(0, 10);
+                      const formattedDetails = row.details.replace(/<\/?[^>]+(>|$)/g, "");
+                      const formattedPending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
+                      return `
+                        <tr>
+                          <td>${row.id}</td>
+                          <td>${row.name}</td>
+                          <td>${formattedDate}</td>
+                          <td>${row.department}</td>
+                          <td>${formattedDetails}</td>
+                          <td>${formattedPending}</td>
+                        </tr>
+                      `;
+                    }
+                  )
+                  .join('')}
+              </tbody>
+            </table>
+          </body>
+        </html>
+      `,
+    };
+
+    // Send the email with the HTML template
+    contactEmail.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json({ status: "ERROR" });
+      } else {
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+        res.send(JSON.stringify({ status: 200, error: null, response: result }));
+      }
+    });
+  });
+});
 
 
 app.get("/leads", (req, res) => {
@@ -315,6 +503,9 @@ app.use(function (err, req, res, next) {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
+
+  var datetime = new Date();
+  console.log(datetime.toISOString().slice(0,10));
   console.log(`Server is running on port ${PORT}.`);
 });
 
