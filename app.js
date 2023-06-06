@@ -74,7 +74,7 @@ contactEmail.verify((error) => {
 
 
 
-cron.schedule('0 6 * * *', () => {
+cron.schedule('0 1 * * *', () => {
 
 
  // Get the current date and time in IST
@@ -99,8 +99,8 @@ cron.schedule('0 6 * * *', () => {
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
   // Replace the placeholder in the SQL query with the current date
-  // let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
-  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
@@ -189,22 +189,17 @@ cron.schedule('0 6 * * *', () => {
 
 app.get("/leads", (req, res) => {
 
-  const CURRENT_DATE = new Date();
-
-  console.log(CURRENT_DATE);
-
-const currentDate = new Date();
-const targetDate = new Date(currentDate.getTime() + 5 * 60 * 60 * 1000 + 30 * 60 * 1000);
-const formattedDate = targetDate.toISOString().slice(0, 10);
-
-console.log(formattedDate);
-var datetime = new Date();
-console.log(datetime);
-let fromid = 'noreply@athulyaseniorcare.com';
+  let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
-  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date >= '2023-06-02%'`;
+  const currentDate = new Date();
+
+  // Format the current date as 'YYYY-MM-DD'
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+  
+  // Replace the placeholder in the SQL query with the current date
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}'`;
     
   console.log(sql);
   let query = conn.query(sql, (err, result) => {
