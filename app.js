@@ -70,29 +70,53 @@ contactEmail.verify((error) => {
 // });
 
 
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/60 * * * *', () => {
   let fromid = 'noreply@athulyaseniorcare.com';
+
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
+  
   const currentDate = new Date();
+
+  // Format the current date as 'YYYY-MM-DD'
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
+  // Replace the placeholder in the SQL query with the current date
   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
-  
     
   console.log(sql);
+
+
   let query = conn.query(sql, (err, result) => {
-    if (err) throw err;
 
-    // Remove HTML tags from the data
-    result.forEach(row => {
-      row.details = row.details.replace(/<\/?[^>]+(>|$)/g, "");
-      row.pending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
-    });
 
-    // Pass the fetched data to the HTML template
+    if (result.length === 0) {
+      // Return JSON response indicating no data
+      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+
+  const mail = {
+    from: `${fromid}`,
+    to: 'muthukumar@athulyaliving.com',
+    subject: `Daily update 30 Cron job "${formattedDates}"`,
+    html: `<p> ,</p>
+    <p> No data available "${formattedDates}" </p>`,
+  };
+  contactEmail.sendMail(mail, (error) => {
+    if (error) {
+      res.json({ status: "ERROR" });
+
+    } else {
+      res.json({ status: "Message Sent" });
+    }
+  });
+
+      return;
+    } 
+    else{
+       // Pass the fetched data to the HTML template
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
-      subject: "OTP for registration is:",
+      subject: "Daily report:",
       html: `
         <html>
           <head>
@@ -113,7 +137,7 @@ cron.schedule('*/5 * * * *', () => {
             </style>
           </head>
           <body>
-            <h1>Daily Report</h1>
+            <h1>Daily Report </h1>
             <table>
               <thead>
                 <tr>
@@ -123,6 +147,7 @@ cron.schedule('*/5 * * * *', () => {
                   <th>Department</th>
                   <th>Details</th>
                   <th>Pending</th>
+                  <th>current time</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,6 +164,8 @@ cron.schedule('*/5 * * * *', () => {
                           <td>${row.department}</td>
                           <td>${row.details}</td>
                           <td>${row.pending}</td>
+                          <td>${row.pending}</td>
+
                         </tr>
                       `;
                     }
@@ -160,12 +187,15 @@ cron.schedule('*/5 * * * *', () => {
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        // res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        res.status(200).json({ status: "SUCCESS" });
+
       }
     });
+    }
+   
   });
 });
-
 
 
 
@@ -174,25 +204,50 @@ cron.schedule('*/30 * * * *', () => {
 
   let fromid = 'noreply@athulyaseniorcare.com';
 
- 
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
   const currentDate = new Date();
 
+  // Format the current date as 'YYYY-MM-DD'
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
+  // Replace the placeholder in the SQL query with the current date
   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
-  
     
   console.log(sql);
+
+
   let query = conn.query(sql, (err, result) => {
 
-    if (err) throw err;
 
-    // Pass the fetched data to the HTML template
+    if (result.length === 0) {
+      // Return JSON response indicating no data
+      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+
+  const mail = {
+    from: `${fromid}`,
+    to: 'muthukumar@athulyaliving.com',
+    subject: `Daily update 30 Cron job "${formattedDates}"`,
+    html: `<p> ,</p>
+    <p> No data available "${formattedDates}" </p>`,
+  };
+  contactEmail.sendMail(mail, (error) => {
+    if (error) {
+      res.json({ status: "ERROR" });
+
+    } else {
+      res.json({ status: "Message Sent" });
+    }
+  });
+
+      return;
+    } 
+    else{
+       // Pass the fetched data to the HTML template
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
-      subject: "Daily update Cron:",
+      subject: "Daily report:",
       html: `
         <html>
           <head>
@@ -212,41 +267,42 @@ cron.schedule('*/30 * * * *', () => {
               }
             </style>
           </head>
-              <body>
-              <h1>Daily Report</h1>
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Department</th>
-                    <th>Details</th>
-                    <th>Pending</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${result
-                    .map(row => {
+          <body>
+            <h1>Daily Report </h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Department</th>
+                  <th>Details</th>
+                  <th>Pending</th>
+                  <th>current time</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${result
+                  .map(
+                    row => {
                       const date = new Date(row.date);
                       const formattedDate = date.toISOString().slice(0, 10);
-                      const details = row.details.replace(/<[^>]+>/g, '');
-                      const pending = row.pending.replace(/<[^>]+>/g, '');
                       return `
                         <tr>
                           <td>${row.id}</td>
                           <td>${row.name}</td>
                           <td>${formattedDate}</td>
                           <td>${row.department}</td>
-                          <td>${details}</td>
-                          <td>${pending}</td>
+                          <td>${row.details}</td>
+                          <td>${row.pending}</td>
+                          <td>${row.pending}</td>
+
                         </tr>
                       `;
-                    })
-                    .join('')}
-                </tbody>
-              </table>
-            </body>
+                    }
+                  )
+                  .join('')}
+              </tbody>
             </table>
           </body>
         </html>
@@ -262,9 +318,13 @@ cron.schedule('*/30 * * * *', () => {
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        // res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        res.status(200).json({ status: "SUCCESS" });
+
       }
     });
+    }
+   
   });
 });
 
@@ -381,11 +441,35 @@ app.get("/leads", (req, res) => {
   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
     
   console.log(sql);
+
+
   let query = conn.query(sql, (err, result) => {
 
-    if (err) throw err;
 
-    // Pass the fetched data to the HTML template
+    if (result.length === 0) {
+      // Return JSON response indicating no data
+      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+
+  const mail = {
+    from: `${fromid}`,
+    to: 'muthukumar@athulyaliving.com',
+    subject: `Daily update 30 Cron job "${formattedDates}"`,
+    html: `<p> ,</p>
+    <p> No data available "${formattedDates}" </p>`,
+  };
+  contactEmail.sendMail(mail, (error) => {
+    if (error) {
+      res.json({ status: "ERROR" });
+
+    } else {
+      res.json({ status: "Message Sent" });
+    }
+  });
+
+      return;
+    } 
+    else{
+       // Pass the fetched data to the HTML template
     const mailOptions = {
       from: `${fromid}`,
       to: 'muthukumar@athulyaliving.com',
@@ -465,6 +549,8 @@ app.get("/leads", (req, res) => {
 
       }
     });
+    }
+   
   });
 });
 
