@@ -70,7 +70,7 @@ contactEmail.verify((error) => {
 // });
 
 
-cron.schedule('*/60 * * * *', (res) => {
+cron.schedule('30 9 * * *', (res) => {
   let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
@@ -96,7 +96,7 @@ cron.schedule('*/60 * * * *', (res) => {
   const mail = {
     from: `${fromid}`,
     to: 'muthukumar@athulyaliving.com',
-    subject: `Daily update 30 Cron job "${formattedDates}"`,
+    subject: `Daily update 3.00 Cron job "${formattedDates}"`,
     html: `<p> ,</p>
     <p> No data available "${formattedDates}" </p>`,
   };
@@ -200,230 +200,230 @@ cron.schedule('*/60 * * * *', (res) => {
 
 
 
-cron.schedule('*/30 * * * *', () => {
+// cron.schedule('*/30 * * * *', () => {
 
-  let fromid = 'noreply@athulyaseniorcare.com';
+//   let fromid = 'noreply@athulyaseniorcare.com';
 
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
+//   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
   
-  const currentDate = new Date();
+//   const currentDate = new Date();
 
-  // Format the current date as 'YYYY-MM-DD'
-  const formattedDates = currentDate.toISOString().slice(0, 10);
+//   // Format the current date as 'YYYY-MM-DD'
+//   const formattedDates = currentDate.toISOString().slice(0, 10);
   
-  // Replace the placeholder in the SQL query with the current date
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+//   // Replace the placeholder in the SQL query with the current date
+//   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
     
-  console.log(sql);
+//   console.log(sql);
 
 
-  let query = conn.query(sql, (err, result) => {
+//   let query = conn.query(sql, (err, result) => {
 
 
-    if (result.length === 0) {
-      // Return JSON response indicating no data
-      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+//     if (result.length === 0) {
+//       // Return JSON response indicating no data
+//       res.send(JSON.stringify({ status: 200, message: "No data available" }));
 
-  const mail = {
-    from: `${fromid}`,
-    to: 'muthukumar@athulyaliving.com',
-    subject: `Daily update 30 Cron job "${formattedDates}"`,
-    html: `<p> ,</p>
-    <p> No data available "${formattedDates}" </p>`,
-  };
-  contactEmail.sendMail(mail, (error) => {
-    if (error) {
-      res.json({ status: "ERROR" });
+//   const mail = {
+//     from: `${fromid}`,
+//     to: 'muthukumar@athulyaliving.com',
+//     subject: `Daily update 30 Cron job "${formattedDates}"`,
+//     html: `<p> ,</p>
+//     <p> No data available "${formattedDates}" </p>`,
+//   };
+//   contactEmail.sendMail(mail, (error) => {
+//     if (error) {
+//       res.json({ status: "ERROR" });
 
-    } else {
-      res.json({ status: "Message Sent" });
-    }
-  });
+//     } else {
+//       res.json({ status: "Message Sent" });
+//     }
+//   });
 
-      return;
-    } 
-    else{
-       // Pass the fetched data to the HTML template
-    const mailOptions = {
-      from: `${fromid}`,
-      to: 'muthukumar@athulyaliving.com',
-      subject: "Daily report:",
-      html: `
-        <html>
-          <head>
-            <style>
-              table {
-                border: 1px solid #333;
-                border-collapse: collapse;
-                width: 100%;
-              }
-              th, td {
-                border: 1px solid #333;
-                padding: 8px;
-                text-align: left;
-              }
-              th {
-                background-color: #f2f2f2;
-              }
-            </style>
-          </head>
-          <body>
-            <h1>Daily Report </h1>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Department</th>
-                  <th>Details</th>
-                  <th>Pending</th>
-                  <th>current time</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${result
-                  .map(
-                    row => {
-                      const date = new Date(row.date);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      return `
-                        <tr>
-                          <td>${row.id}</td>
-                          <td>${row.name}</td>
-                          <td>${formattedDate}</td>
-                          <td>${row.department}</td>
-                          <td>${row.details}</td>
-                          <td>${row.pending}</td>
-                          <td>${row.pending}</td>
+//       return;
+//     } 
+//     else{
+//        // Pass the fetched data to the HTML template
+//     const mailOptions = {
+//       from: `${fromid}`,
+//       to: 'muthukumar@athulyaliving.com',
+//       subject: "Daily report:",
+//       html: `
+//         <html>
+//           <head>
+//             <style>
+//               table {
+//                 border: 1px solid #333;
+//                 border-collapse: collapse;
+//                 width: 100%;
+//               }
+//               th, td {
+//                 border: 1px solid #333;
+//                 padding: 8px;
+//                 text-align: left;
+//               }
+//               th {
+//                 background-color: #f2f2f2;
+//               }
+//             </style>
+//           </head>
+//           <body>
+//             <h1>Daily Report </h1>
+//             <table>
+//               <thead>
+//                 <tr>
+//                   <th>ID</th>
+//                   <th>Name</th>
+//                   <th>Date</th>
+//                   <th>Department</th>
+//                   <th>Details</th>
+//                   <th>Pending</th>
+//                   <th>current time</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 ${result
+//                   .map(
+//                     row => {
+//                       const date = new Date(row.date);
+//                       const formattedDate = date.toISOString().slice(0, 10);
+//                       return `
+//                         <tr>
+//                           <td>${row.id}</td>
+//                           <td>${row.name}</td>
+//                           <td>${formattedDate}</td>
+//                           <td>${row.department}</td>
+//                           <td>${row.details}</td>
+//                           <td>${row.pending}</td>
+//                           <td>${row.pending}</td>
 
-                        </tr>
-                      `;
-                    }
-                  )
-                  .join('')}
-              </tbody>
-            </table>
-          </body>
-        </html>
-      `,
-    };
+//                         </tr>
+//                       `;
+//                     }
+//                   )
+//                   .join('')}
+//               </tbody>
+//             </table>
+//           </body>
+//         </html>
+//       `,
+//     };
 
-    // Send the email with the HTML template
-    contactEmail.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ status: "ERROR" });
-      } else {
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+//     // Send the email with the HTML template
+//     contactEmail.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.log(error);
+//         res.status(500).json({ status: "ERROR" });
+//       } else {
+//         console.log("Message sent: %s", info.messageId);
+//         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        // res.send(JSON.stringify({ status: 200, error: null, response: result }));
-        res.status(200).json({ status: "SUCCESS" });
+//         // res.send(JSON.stringify({ status: 200, error: null, response: result }));
+//         res.status(200).json({ status: "SUCCESS" });
 
-      }
-    });
-    }
+//       }
+//     });
+//     }
    
-  });
-});
+//   });
+// });
 
-cron.schedule('*/5 * * * *', () => {
-  let fromid = 'noreply@athulyaseniorcare.com';
-  const currentDate = new Date();
-  const formattedDates = currentDate.toISOString().slice(0, 10);
+// cron.schedule('*/5 * * * *', () => {
+//   let fromid = 'noreply@athulyaseniorcare.com';
+//   const currentDate = new Date();
+//   const formattedDates = currentDate.toISOString().slice(0, 10);
 
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+//   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
 
-  console.log(sql);
-  let query = conn.query(sql, (err, result) => {
-    if (err) throw err;
+//   console.log(sql);
+//   let query = conn.query(sql, (err, result) => {
+//     if (err) throw err;
 
-    // Remove HTML tags from the data
-    result.forEach(row => {
-      row.details = row.details.replace(/<\/?[^>]+(>|$)/g, "");
-      row.pending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
-    });
+//     // Remove HTML tags from the data
+//     result.forEach(row => {
+//       row.details = row.details.replace(/<\/?[^>]+(>|$)/g, "");
+//       row.pending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
+//     });
 
-    // Pass the fetched data to the HTML template
-    const mailOptions = {
-      from: `${fromid}`,
-      to: 'muthukumar@athulyaliving.com',
-      subject: "OTP for registration is:",
-      html: `
-        <html>
-          <head>
-            <style>
-              table {
-                border: 1px solid #333;
-                border-collapse: collapse;
-                width: 100%;
-              }
-              th, td {
-                border: 1px solid #333;
-                padding: 8px;
-                text-align: left;
-              }
-              th {
-                background-color: #f2f2f2;
-              }
-            </style>
-          </head>
-          <body>
-            <h1>Daily Report</h1>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Department</th>
-                  <th>Details</th>
-                  <th>Pending</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${result
-                  .map(
-                    row => {
-                      const date = new Date(row.date);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const formattedDetails = row.details.replace(/<\/?[^>]+(>|$)/g, "");
-                      const formattedPending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
-                      return `
-                        <tr>
-                          <td>${row.id}</td>
-                          <td>${row.name}</td>
-                          <td>${formattedDate}</td>
-                          <td>${row.department}</td>
-                          <td>${formattedDetails}</td>
-                          <td>${formattedPending}</td>
-                        </tr>
-                      `;
-                    }
-                  )
-                  .join('')}
-              </tbody>
-            </table>
-          </body>
-        </html>
-      `,
-    };
+//     // Pass the fetched data to the HTML template
+//     const mailOptions = {
+//       from: `${fromid}`,
+//       to: 'muthukumar@athulyaliving.com',
+//       subject: "OTP for registration is:",
+//       html: `
+//         <html>
+//           <head>
+//             <style>
+//               table {
+//                 border: 1px solid #333;
+//                 border-collapse: collapse;
+//                 width: 100%;
+//               }
+//               th, td {
+//                 border: 1px solid #333;
+//                 padding: 8px;
+//                 text-align: left;
+//               }
+//               th {
+//                 background-color: #f2f2f2;
+//               }
+//             </style>
+//           </head>
+//           <body>
+//             <h1>Daily Report</h1>
+//             <table>
+//               <thead>
+//                 <tr>
+//                   <th>ID</th>
+//                   <th>Name</th>
+//                   <th>Date</th>
+//                   <th>Department</th>
+//                   <th>Details</th>
+//                   <th>Pending</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 ${result
+//                   .map(
+//                     row => {
+//                       const date = new Date(row.date);
+//                       const formattedDate = date.toISOString().slice(0, 10);
+//                       const formattedDetails = row.details.replace(/<\/?[^>]+(>|$)/g, "");
+//                       const formattedPending = row.pending.replace(/<\/?[^>]+(>|$)/g, "");
+//                       return `
+//                         <tr>
+//                           <td>${row.id}</td>
+//                           <td>${row.name}</td>
+//                           <td>${formattedDate}</td>
+//                           <td>${row.department}</td>
+//                           <td>${formattedDetails}</td>
+//                           <td>${formattedPending}</td>
+//                         </tr>
+//                       `;
+//                     }
+//                   )
+//                   .join('')}
+//               </tbody>
+//             </table>
+//           </body>
+//         </html>
+//       `,
+//     };
 
-    // Send the email with the HTML template
-    contactEmail.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ status: "ERROR" });
-      } else {
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+//     // Send the email with the HTML template
+//     contactEmail.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.log(error);
+//         res.status(500).json({ status: "ERROR" });
+//       } else {
+//         console.log("Message sent: %s", info.messageId);
+//         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        res.send(JSON.stringify({ status: 200, error: null, response: result }));
-      }
-    });
-  });
-});
+//         res.send(JSON.stringify({ status: 200, error: null, response: result }));
+//       }
+//     });
+//   });
+// });
 
 
 app.get("/leads", (req, res) => {
