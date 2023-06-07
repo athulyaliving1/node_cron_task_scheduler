@@ -209,7 +209,7 @@ contactEmail.verify((error) => {
 const gmtCronSchedule = '32 16 * * *'; // GMT time
 
 
-cron.schedule(istCronSchedule, (res) => {
+cron.schedule(gmtCronSchedule, (res) => {
 
   const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
