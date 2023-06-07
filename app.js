@@ -206,7 +206,7 @@ contactEmail.verify((error) => {
 
 
 
-const gmtCronSchedule = '41 17 * * *'; // GMT time
+const gmtCronSchedule = '00 21 * * *'; // GMT time
 
 
 cron.schedule(gmtCronSchedule, (res) => {
@@ -249,7 +249,7 @@ cron.schedule(gmtCronSchedule, (res) => {
   const mail = {
     from: `${fromid}`,
     to: 'muthukumar@athulyaliving.com',
-    subject: `Daily update 3.00 Cron job "${formattedDates}"`,
+    subject: `Daily update 9.00 Cron job "${formattedDates}"`,
     html: `<p> ,</p>
     <p> No data available "${formattedDates}" </p>`,
   };
