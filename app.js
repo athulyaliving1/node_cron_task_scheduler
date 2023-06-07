@@ -206,10 +206,19 @@ contactEmail.verify((error) => {
 
 
 
-const gmtCronSchedule = '30 17 * * *'; // GMT time
+const gmtCronSchedule = '41 17 * * *'; // GMT time
 
 
 cron.schedule(gmtCronSchedule, (res) => {
+
+
+  var tomaillist = [
+    "sysadmin@athulyaliving.com",
+    "muthukumar@athulyaliving.com",
+    "harish@athulyaliving.com"
+  
+  ];
+
 
   const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
@@ -229,7 +238,6 @@ cron.schedule(gmtCronSchedule, (res) => {
   let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
     
   console.log(sql);
-
 
   let query = conn.query(sql, (err, result) => {
 
@@ -260,8 +268,8 @@ cron.schedule(gmtCronSchedule, (res) => {
        // Pass the fetched data to the HTML template
     const mailOptions = {
       from: `${fromid}`,
-      to: 'muthukumar@athulyaliving.com',
-      subject: "Daily report:",
+      to: tomaillist,
+      subject: `Daily update 9.00pm Cron job "${formattedDates}"`,
       html: `
         <html>
           <head>
