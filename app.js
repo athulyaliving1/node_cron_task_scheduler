@@ -213,11 +213,10 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
   var tomaillist = [
-    "sysadmin@athulyaliving.com",
-    "muthukumar@athulyaliving.com",
-    "harish@athulyaliving.com",
+    "sysadmin@athulyaliving.com",    
     "prabhagaran@athulyaliving.com",
-    "muthukumar0802@gmail.com"
+    "muthukumar0802@gmail.com",
+    "itteam@athulyaliving.com"
   
   ];
 
