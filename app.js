@@ -70,7 +70,7 @@ contactEmail.verify((error) => {
 // });
 
 
-cron.schedule('30 9 * * *', (res) => {
+cron.schedule('30 10 * * *', (res) => {
   let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
