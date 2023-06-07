@@ -328,7 +328,7 @@ cron.schedule('*/30 * * * *', () => {
   });
 });
 
-cron.schedule('11 3 * * *', () => {
+cron.schedule('*/5 * * * *', () => {
   let fromid = 'noreply@athulyaseniorcare.com';
   const currentDate = new Date();
   const formattedDates = currentDate.toISOString().slice(0, 10);
