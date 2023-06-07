@@ -208,21 +208,14 @@ contactEmail.verify((error) => {
 
 const gmtCronSchedule = '32 16 * * *'; // GMT time
 
-const istCronSchedule = gmtCronSchedule.split(' ').map((value, index) => {
-  if (index === 1) {
-    const hour = parseInt(value) + 5; // Add 5 hours
-    const minute = parseInt(value) + 30; // Add 30 minutes
-
-    return `${minute} ${hour}`;
-  }
-  return value;
-}).join(' ');
-
-console.log('IST cron schedule:', istCronSchedule);
 
 cron.schedule(istCronSchedule, (res) => {
-  
 
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${formattedDate}`);
+  
+  console.log('IST cron schedule:', gmtCronSchedule);
   let fromid = 'noreply@athulyaseniorcare.com';
 
   // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
