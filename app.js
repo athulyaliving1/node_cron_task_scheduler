@@ -239,7 +239,7 @@ cron.schedule(gmtCronSchedule, (res) => {
     
   console.log(sql);
 
-  let query = conn.query(sql, (err, result) => {
+  let query = conn.query(sql, (err, result,res) => {
 
 
     if (result.length === 0) {
