@@ -611,13 +611,13 @@ app.get("/leads", (req, res) => {
 
     if (result.length === 0) {
       // Return JSON response indicating no data
-      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+      // res.send(JSON.stringify({ status: 200, message: "No data available" }));
 
   const mail = {
     from: `${fromid}`,
     to: 'muthukumar@athulyaliving.com',
     subject: `Daily update 30 Cron job "${formattedDates}"`,
-    html: `<p> ,</p>
+    html: `<p>Daily Update </p>
     <p> No data available "${formattedDates}" </p>`,
   };
   contactEmail.sendMail(mail, (error) => {
