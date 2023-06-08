@@ -244,7 +244,7 @@ cron.schedule(gmtCronSchedule, (res) => {
 
     if (result.length === 0) {
       // Return JSON response indicating no data
-      res.send(JSON.stringify({ status: 200, message: "No data available" }));
+      // res.send(JSON.stringify({ status: 200, message: "No data available" }));
 
   const mail = {
     from: `${fromid}`,
