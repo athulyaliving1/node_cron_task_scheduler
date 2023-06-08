@@ -7,7 +7,7 @@ var mysql = require('mysql');
 const nodemailer = require("nodemailer");
 var cron = require('node-cron');
 const moment = require('moment-timezone');
-
+const he = require('he');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 /** @type {*} */
@@ -206,7 +206,7 @@ contactEmail.verify((error) => {
 
 
 
-const gmtCronSchedule = '00 21 * * *'; // GMT time
+const gmtCronSchedule = '45 9 * * *'; // GMT time
 
 
 cron.schedule(gmtCronSchedule, (res) => {
@@ -215,9 +215,8 @@ cron.schedule(gmtCronSchedule, (res) => {
   var tomaillist = [
     "sysadmin@athulyaliving.com",    
     "prabhagaran@athulyaliving.com",
-    "muthukumar0802@gmail.com",
     "itteam@athulyaliving.com"
-  
+ 
   ];
 
 
@@ -300,32 +299,29 @@ cron.schedule(gmtCronSchedule, (res) => {
                   <th>Date</th>
                   <th>Department</th>
                   <th>Details</th>
-                  <th>Pending</th>
-                  <th>current time</th>
+                  <th>Pending</th>              
                 </tr>
               </thead>
               <tbody>
-                ${result
-                  .map(
-                    row => {
-                      const date = new Date(row.date);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      return `
-                        <tr>
-                          <td>${row.id}</td>
-                          <td>${row.name}</td>
-                          <td>${formattedDate}</td>
-                          <td>${row.department}</td>
-                          <td>${row.details}</td>
-                          <td>${row.pending}</td>
-                          <td>${row.pending}</td>
-
-                        </tr>
-                      `;
-                    }
-                  )
-                  .join('')}
-              </tbody>
+              ${result
+                .map(row => {
+                  const date = new Date(row.date);
+                  const formattedDate = date.toISOString().slice(0, 10);
+                  const detailsWithoutTags = he.decode(row.details.replace(/<[^>]+>/g, ''));
+                  const pendingWithoutTags = he.decode(row.pending.replace(/<[^>]+>/g, ''));
+                  return `
+                    <tr>
+                      <td>${row.id}</td>
+                      <td>${row.name}</td>
+                      <td>${formattedDate}</td>
+                      <td>${row.department}</td>
+                      <td>${detailsWithoutTags}</td>
+                      <td>${pendingWithoutTags}</td>
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
             </table>
           </body>
         </html>
@@ -597,7 +593,7 @@ app.get("/leads", (req, res) => {
 
   let fromid = 'noreply@athulyaseniorcare.com';
 
-  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
+  let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-07%'`;
   
   const currentDate = new Date();
 
@@ -605,7 +601,7 @@ app.get("/leads", (req, res) => {
   const formattedDates = currentDate.toISOString().slice(0, 10);
   
   // Replace the placeholder in the SQL query with the current date
-  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+  // let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
     
   console.log(sql);
 
@@ -671,31 +667,29 @@ app.get("/leads", (req, res) => {
                   <th>Department</th>
                   <th>Details</th>
                   <th>Pending</th>
-                  <th>current time</th>
+                 
                 </tr>
               </thead>
               <tbody>
-                ${result
-                  .map(
-                    row => {
-                      const date = new Date(row.date);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      return `
-                        <tr>
-                          <td>${row.id}</td>
-                          <td>${row.name}</td>
-                          <td>${formattedDate}</td>
-                          <td>${row.department}</td>
-                          <td>${row.details}</td>
-                          <td>${row.pending}</td>
-                          <td>${row.pending}</td>
-
-                        </tr>
-                      `;
-                    }
-                  )
-                  .join('')}
-              </tbody>
+              ${result
+                .map(row => {
+                  const date = new Date(row.date);
+                  const formattedDate = date.toISOString().slice(0, 10);
+                  const detailsWithoutTags = he.decode(row.details.replace(/<[^>]+>/g, ''));
+                  const pendingWithoutTags = he.decode(row.pending.replace(/<[^>]+>/g, ''));
+                  return `
+                    <tr>
+                      <td>${row.id}</td>
+                      <td>${row.name}</td>
+                      <td>${formattedDate}</td>
+                      <td>${row.department}</td>
+                      <td>${detailsWithoutTags}</td>
+                      <td>${pendingWithoutTags}</td>
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
             </table>
           </body>
         </html>
