@@ -206,7 +206,7 @@ contactEmail.verify((error) => {
 
 
 
-const gmtCronSchedule = '45 9 * * *'; // GMT time
+const gmtCronSchedule = '55 9 * * *'; // GMT time
 
 
 cron.schedule(gmtCronSchedule, (res) => {
