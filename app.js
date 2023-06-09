@@ -398,7 +398,7 @@ cron.schedule(gmtCronSchedule1, (res) => {
 
   const mail = {
     from: `${fromid}`,
-    to: 'muthukumar@athulyaliving.com',
+    to: tomaillist,
     subject: `Daily update 9.00 Cron job "${formattedDates}"`,
     html: `<p> Daily Update </p>
     <p> No data available "${formattedDates}" </p>`,
