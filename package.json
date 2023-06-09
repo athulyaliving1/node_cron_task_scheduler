@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "node ./bin/www",
-    "start": "nodemon app.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon app.js"
   },
+  
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "date-and-time": "^3.0.0",
