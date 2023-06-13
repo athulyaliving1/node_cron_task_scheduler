@@ -206,7 +206,7 @@ contactEmail.verify((error) => {
 
 
 
-const gmtCronSchedule = '45 09 * * *'; // GMT time
+const gmtCronSchedule = '15 09 * * *'; // GMT time
 console.log(`IST cron schedule:', ${gmtCronSchedule}`);
 
 cron.schedule(gmtCronSchedule, (res) => {
@@ -350,6 +350,165 @@ cron.schedule(gmtCronSchedule, (res) => {
 }, {
   timezone: "Asia/Kolkata"
 });
+
+
+
+const gmtCronSchedules = '30 05 * * *'; // GMT time
+console.log(`IST cron schedule:', ${gmtCronSchedules}`);
+
+cron.schedule(gmtCronSchedule, (res) => {
+
+
+  var tomaillist = [
+    "sysadmin@athulyaliving.com",    
+    "prabhagaran@athulyaliving.com",
+    "itteam@athulyaliving.com"
+ 
+  ];
+
+
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${formattedDate}`);
+  
+
+  let fromid = 'noreply@athulyaseniorcare.com';
+
+  // let sql = `SELECT * FROM daily_update WHERE department='IT' AND date LIKE '2023-06-02%'`;
+  
+  const currentDate = new Date();
+
+  // Format the current date as 'YYYY-MM-DD'
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+  
+  // Replace the placeholder in the SQL query with the current date
+  let sql = `SELECT * FROM daily_update WHERE date >= '${formattedDates}%'`;
+    
+  console.log(sql);
+
+  let query = conn.query(sql, (err, result,res) => {
+
+
+    if (result.length === 0) {
+      // Return JSON response indicating no data
+      // res.send(JSON.stringify({ status: 200, message: "No data available" }));
+
+  const mail = {
+    from: `${fromid}`,
+    to: 'muthukumar@athulyaliving.com',
+    subject: `Daily update 9.00 Cron job "${formattedDates}"`,
+    html: `<p> Daily Update </p>
+    <p> No data available "${formattedDates}" </p>`,
+  };
+  contactEmail.sendMail(mail, (error) => {
+    if (error) {
+      res.json({ status: "ERROR" });
+
+    } else {
+      res.json({ status: "Message Sent" });
+    }
+  });
+
+      return;
+    } 
+    else{
+       // Pass the fetched data to the HTML template
+    const mailOptions = {
+      from: `${fromid}`,
+      to: tomaillist,
+      subject: `Daily update 9.00pm Cron job "${formattedDates}"`,
+      html: `
+        <html>
+          <head>
+            <style>
+              table {
+                border: 1px solid #333;
+                border-collapse: collapse;
+                width: 100%;
+              }
+              th, td {
+                border: 1px solid #333;
+                padding: 8px;
+                text-align: left;
+              }
+              th {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Daily Report </h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Department</th>
+                  <th>Details</th>
+                  <th>Pending</th>              
+                </tr>
+              </thead>
+              <tbody>
+              ${result
+                .map(row => {
+                  const date = new Date(row.date);
+                  const formattedDate = date.toISOString().slice(0, 10);
+                  const detailsWithoutTags = he.decode(row.details.replace(/<[^>]+>/g, ''));
+                  const pendingWithoutTags = he.decode(row.pending.replace(/<[^>]+>/g, ''));
+                  return `
+                    <tr>
+                      <td>${row.id}</td>
+                      <td>${row.name}</td>
+                      <td>${formattedDate}</td>
+                      <td>${row.department}</td>
+                      <td>${detailsWithoutTags}</td>
+                      <td>${pendingWithoutTags}</td>
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
+            </table>
+          </body>
+        </html>
+      `,
+    };
+
+    // Send the email with the HTML template
+    contactEmail.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json({ status: "ERROR" });
+      } else {
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+        // res.send(JSON.stringify({ status: 200, error: null, response: result }));
+        res.status(200).json({ status: "SUCCESS" });
+
+      }
+    });
+    }
+    
+   
+  });
+
+}, {
+  timezone: "Asia/Kolkata"
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
