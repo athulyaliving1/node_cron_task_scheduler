@@ -213,9 +213,10 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
   var tomaillist = [
-    "sysadmin@athulyaliving.com",
-    "prabhagaran@athulyaliving.com",
-    "itteam@athulyaliving.com"
+    // "sysadmin@athulyaliving.com",
+    // "prabhagaran@athulyaliving.com",
+    // "itteam@athulyaliving.com"
+     "muthukumar@athulyaliving.com"
 
   ];
 
@@ -360,9 +361,10 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
   var tomaillist = [
-    "sysadmin@athulyaliving.com",
-    "prabhagaran@athulyaliving.com",
-    "itteam@athulyaliving.com"
+    // "sysadmin@athulyaliving.com",
+    // "prabhagaran@athulyaliving.com",
+    // "itteam@athulyaliving.com"
+    "muthukumar@athulyaliving.com"
 
   ];
 
@@ -506,7 +508,7 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
 
-const gmtCronSchedule1 = '00 21 * * *'; // GMT time
+const gmtCronSchedule1 = '34 09 * * *'; // GMT time
 console.log(`IST cron schedule:', ${gmtCronSchedule1}`);
 
 cron.schedule(gmtCronSchedule1, (res) => {
