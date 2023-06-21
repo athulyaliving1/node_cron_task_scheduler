@@ -354,7 +354,7 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
 
-const gmtCronSchedules = '48 09 * * 1,2,3,4,5,6'; // GMT time
+const gmtCronSchedules = '52 09 * 1,2,3,4,5'; // GMT time
 console.log(`IST cron schedule:', ${gmtCronSchedules}`);
 
 cron.schedule(gmtCronSchedule, (res) => {
