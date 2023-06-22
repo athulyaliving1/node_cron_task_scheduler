@@ -217,7 +217,7 @@ cron.schedule(gmtCronSchedule, (res) => {
     // "sysadmin@athulyaliving.com",
     // "prabhagaran@athulyaliving.com",
     // "itteam@athulyaliving.com"
-     "muthukumar@athulyaliving.com"
+    "muthukumar@athulyaliving.com"
 
   ];
 
@@ -656,7 +656,9 @@ cron.schedule(gmtCronSchedule1, (res) => {
 //---------------------------------------------------------------- NEW  Complaint List ----------------------------------------------------------------
 
 
-const gmtCronSchedule2 = '45 13 * * *';
+const gmtCronSchedule2 = '54 20 * * *';
+
+console.log(`New complaint running cron:', ${gmtCronSchedule2}`);
 
 cron.schedule(gmtCronSchedule2, () => {
   const tomaillist2 = ["muthukumar@athulyaliving.com"];
@@ -668,20 +670,22 @@ cron.schedule(gmtCronSchedule2, () => {
   const currentDate = new Date();
   const formattedDates = currentDate.toISOString().slice(0, 10);
 
-  const sql = `SELECT tblcomplaints.userId,tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails,tblcomplaints.status, tblcomplaints.regDate, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.regDate LIKE'${formattedDate}%'`;
+  const sql = `SELECT tblcomplaints.userId, tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails, tblcomplaints.status, tblcomplaints.regDate, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place,tblcomplaints.todepartment users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.status = 'notprocessyet' AND tblcomplaints.todepartment = 'IT' AND tblcomplaints.regDate='${formattedDate}%'`;
 
-  console.log(sql);
 
-  conn.query(sql, (err, result) => {
+  // check here
+  // console.log(sql);
+
+  conn.query(sql, (res, err, result) => {
     if (err) {
       console.error(err);
       res.status(500).json({ status: "ERROR" });
       return;
     }
 
-    if (result.length === 0) {
+    if (!result || result.length === 0) {
       const mail = {
-        from: fromid,
+        from: `${fromid}`,
         to: tomaillist2,
         subject: `IT New Complaint List Date "${formattedDates}"`,
         html: `
@@ -741,11 +745,11 @@ cron.schedule(gmtCronSchedule2, () => {
                 </thead>
                 <tbody>
                   ${result
-                    .map(row => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
-                      return `
+            .map(row => {
+              const date = new Date(row.regDate);
+              const formattedDate = date.toISOString().slice(0, 10);
+              const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+              return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -756,11 +760,10 @@ cron.schedule(gmtCronSchedule2, () => {
                           <td>${row.location}</td>
                           <td>${row.place}</td>
                           <td>${formattedDate}</td>
-                         
                         </tr>
                       `;
-                    })
-                    .join('')}
+            })
+            .join('')}
                 </tbody>
               </table>
             </body>
@@ -780,10 +783,10 @@ cron.schedule(gmtCronSchedule2, () => {
       });
     }
   });
-},
-{
+}, {
   timezone: "Asia/Kolkata"
 });
+
 
 
 
@@ -791,7 +794,9 @@ cron.schedule(gmtCronSchedule2, () => {
 
 
 
-const gmtCronSchedule3 = '46 13 * * *';
+const gmtCronSchedule3 = '57 20 * * *';
+
+console.log(`In process running complaint cron:', ${gmtCronSchedule3}`);
 
 cron.schedule(gmtCronSchedule3, () => {
   const tomaillist3 = ["muthukumar@athulyaliving.com"];
@@ -808,16 +813,13 @@ cron.schedule(gmtCronSchedule3, () => {
   console.log(sql);
 
   conn.query(sql, (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ status: "ERROR" });
-      return;
-    }
 
-    if (result.length === 0) {
+
+
+    if (!result || result.length === 0) {
       const mail = {
         from: fromid,
-        to: tomaillist2,
+        to: tomaillist3,
         subject: `IT Inprocess Complaint List Date "${formattedDates}"`,
         html: `
           <p>IT Inprocess Complaint List</p>
@@ -838,7 +840,7 @@ cron.schedule(gmtCronSchedule3, () => {
       const mailOptions = {
         from: fromid,
         to: tomaillist3,
-        subject: `IT New Complaint List Date "${formattedDates}"`,
+        subject: `IT Inprocess Complaint List "${formattedDates}"`,
         html: `
           <html>
             <head>
@@ -877,11 +879,11 @@ cron.schedule(gmtCronSchedule3, () => {
                 </thead>
                 <tbody>
                   ${result
-                    .map(row => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
-                      return `
+            .map(row => {
+              const date = new Date(row.regDate);
+              const formattedDate = date.toISOString().slice(0, 10);
+              const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+              return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -896,8 +898,8 @@ cron.schedule(gmtCronSchedule3, () => {
                          
                         </tr>
                       `;
-                    })
-                    .join('')}
+            })
+            .join('')}
                 </tbody>
               </table>
             </body>
@@ -918,9 +920,9 @@ cron.schedule(gmtCronSchedule3, () => {
     }
   });
 },
-{
-  timezone: "Asia/Kolkata"
-});
+  {
+    timezone: "Asia/Kolkata"
+  });
 
 
 
@@ -928,7 +930,10 @@ cron.schedule(gmtCronSchedule3, () => {
 
 // -------------------------------- CLOSED COMPLAINT  CRON JOBS  --------------------------------
 
-const gmtCronSchedule4 = '47 13 * * *';
+const gmtCronSchedule4 = '45 20 * * *';
+
+console.log(`Closed complaint running complaint cron:', ${gmtCronSchedule4}`);
+
 
 cron.schedule(gmtCronSchedule4, () => {
   const tomaillist4 = ["muthukumar@athulyaliving.com"];
@@ -940,24 +945,20 @@ cron.schedule(gmtCronSchedule4, () => {
   const currentDate = new Date();
   const formattedDates = currentDate.toISOString().slice(0, 10);
 
-  const sql = `SELECT tblcomplaints.userId, tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails, tblcomplaints.todepartment, tblcomplaints.status, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, tblcomplaints.regDate, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.status = 'closed' AND tblcomplaints.todepartment = 'IT'`;
+  const sql = `SELECT tblcomplaints.userId, tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails, tblcomplaints.todepartment, tblcomplaints.status, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, tblcomplaints.regDate, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.status = 'closed' AND tblcomplaints.todepartment = 'IT' AND tblcomplaints.regDate LIKE '${formattedDate}%'`;
 
   console.log(sql);
 
   conn.query(sql, (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ status: "ERROR" });
-      return;
-    }
 
-    if (result.length === 0) {
+
+    if (!result || result.length === 0) {
       const mail = {
         from: fromid,
         to: tomaillist4,
-        subject: `IT New Complaint List Date "${formattedDates}"`,
+        subject: `IT Closed Complaint List Date "${formattedDates}"`,
         html: `
-          <p>IT New Complaint List</p>
+          <p>IT Closed Complaint List</p>
           <p>No data available "${formattedDates}"</p>`,
       };
 
@@ -974,7 +975,7 @@ cron.schedule(gmtCronSchedule4, () => {
     } else {
       const mailOptions = {
         from: fromid,
-        to: tomaillist3,
+        to: tomaillist4,
         subject: `IT New Complaint List Date "${formattedDates}"`,
         html: `
           <html>
@@ -996,7 +997,7 @@ cron.schedule(gmtCronSchedule4, () => {
               </style>
             </head>
             <body>
-              <h1>IT Inprocess Complaint List</h1>
+              <h1>IT Closed Complaint List</h1>
               <table>
                 <thead>
                   <tr>
@@ -1014,11 +1015,11 @@ cron.schedule(gmtCronSchedule4, () => {
                 </thead>
                 <tbody>
                   ${result
-                    .map(row => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
-                      return `
+            .map(row => {
+              const date = new Date(row.regDate);
+              const formattedDate = date.toISOString().slice(0, 10);
+              const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+              return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -1029,12 +1030,12 @@ cron.schedule(gmtCronSchedule4, () => {
                           <td>${row.location}</td>
                           <td>${row.place}</td>
                           <td>${formattedDate}</td>
-                          <td>IN Process</td>
+                          <td>Closed</td>
                          
                         </tr>
                       `;
-                    })
-                    .join('')}
+            })
+            .join('')}
                 </tbody>
               </table>
             </body>
@@ -1055,9 +1056,9 @@ cron.schedule(gmtCronSchedule4, () => {
     }
   });
 },
-{
-  timezone: "Asia/Kolkata"
-});
+  {
+    timezone: "Asia/Kolkata"
+  });
 
 
 
