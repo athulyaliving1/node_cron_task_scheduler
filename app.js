@@ -653,8 +653,10 @@ cron.schedule(gmtCronSchedule1, (res) => {
 });
 
 
+//---------------------------------------------------------------- NEW  Complaint List ----------------------------------------------------------------
 
-const gmtCronSchedule2 = '25 13 * * *';
+
+const gmtCronSchedule2 = '45 13 * * *';
 
 cron.schedule(gmtCronSchedule2, () => {
   const tomaillist2 = ["muthukumar@athulyaliving.com"];
@@ -789,7 +791,7 @@ cron.schedule(gmtCronSchedule2, () => {
 
 
 
-const gmtCronSchedule3 = '24 13 * * *';
+const gmtCronSchedule3 = '46 13 * * *';
 
 cron.schedule(gmtCronSchedule3, () => {
   const tomaillist3 = ["muthukumar@athulyaliving.com"];
@@ -926,7 +928,7 @@ cron.schedule(gmtCronSchedule3, () => {
 
 // -------------------------------- CLOSED COMPLAINT  CRON JOBS  --------------------------------
 
-const gmtCronSchedule4 = '23 13 * * *';
+const gmtCronSchedule4 = '47 13 * * *';
 
 cron.schedule(gmtCronSchedule4, () => {
   const tomaillist4 = ["muthukumar@athulyaliving.com"];
