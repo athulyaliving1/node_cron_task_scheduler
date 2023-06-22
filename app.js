@@ -789,7 +789,7 @@ cron.schedule(gmtCronSchedule2, () => {
 
 
 
-const gmtCronSchedule3 = '07 13 * * *';
+const gmtCronSchedule3 = '14 13 * * *';
 
 cron.schedule(gmtCronSchedule3, () => {
   const tomaillist3 = ["muthukumar@athulyaliving.com"];
@@ -926,7 +926,7 @@ cron.schedule(gmtCronSchedule3, () => {
 
 // -------------------------------- CLOSED COMPLAINT  CRON JOBS  --------------------------------
 
-const gmtCronSchedule4 = '08 13 * * *';
+const gmtCronSchedule4 = '15 13 * * *';
 
 cron.schedule(gmtCronSchedule4, () => {
   const tomaillist4 = ["muthukumar@athulyaliving.com"];
