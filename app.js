@@ -10,6 +10,7 @@ const moment = require('moment-timezone');
 const he = require('he');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const { error } = require('console');
 /** @type {*} */
 var app = express();
 
@@ -503,9 +504,7 @@ cron.schedule(gmtCronSchedule, (res) => {
 
 
 
-
-
-
+//Daily Task Update
 
 
 const gmtCronSchedule1 = '00 21 * * *'; // GMT time
@@ -652,6 +651,415 @@ cron.schedule(gmtCronSchedule1, (res) => {
 }, {
   timezone: "Asia/Kolkata"
 });
+
+
+
+const gmtCronSchedule2 = '06 13 * * *';
+
+cron.schedule(gmtCronSchedule2, () => {
+  const tomaillist2 = ["muthukumar@athulyaliving.com"];
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${gmtCronSchedule2}`);
+
+  const fromid = 'noreply@athulyaseniorcare.com';
+  const currentDate = new Date();
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+
+  const sql = `SELECT tblcomplaints.userId,tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails,tblcomplaints.status, tblcomplaints.regDate, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.regDate LIKE'${formattedDate}%'`;
+
+  console.log(sql);
+
+  conn.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ status: "ERROR" });
+      return;
+    }
+
+    if (result.length === 0) {
+      const mail = {
+        from: fromid,
+        to: tomaillist2,
+        subject: `IT New Complaint List Date "${formattedDates}"`,
+        html: `
+          <p>IT New Complaint List</p>
+          <p>No data available "${formattedDates}"</p>`,
+      };
+
+      contactEmail.sendMail(mail, (error) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          res.json({ status: "Message Sent" });
+        }
+      });
+
+      return;
+    } else {
+      const mailOptions = {
+        from: fromid,
+        to: tomaillist2,
+        subject: `IT New Complaint List Date "${formattedDates}"`,
+        html: `
+          <html>
+            <head>
+              <style>
+                table {
+                  border: 1px solid #333;
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+                th, td {
+                  border: 1px solid #333;
+                  padding: 8px;
+                  text-align: left;
+                }
+                th {
+                  background-color: #f2f2f2;
+                }
+              </style>
+            </head>
+            <body>
+              <h1>Daily Report</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>C.NO</th>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Complaint Type</th>
+                    <th>Department</th>
+                    <th>Complaint Details</th>
+                    <th>Location</th>
+                    <th>Place</th>
+                    <th>Complaint Date</th>              
+                  </tr>
+                </thead>
+                <tbody>
+                  ${result
+                    .map(row => {
+                      const date = new Date(row.regDate);
+                      const formattedDate = date.toISOString().slice(0, 10);
+                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+                      return `
+                        <tr>
+                          <td>${row.complaintNumber}</td>
+                          <td>${row.emp_id}</td>
+                          <td>${row.fullName}</td>
+                          <td>${row.complaintType}</td>
+                          <td>${row.fromdepartment}</td>
+                          <td>${detailsWithoutTags}</td>
+                          <td>${row.location}</td>
+                          <td>${row.place}</td>
+                          <td>${formattedDate}</td>
+                         
+                        </tr>
+                      `;
+                    })
+                    .join('')}
+                </tbody>
+              </table>
+            </body>
+          </html>
+        `,
+      };
+
+      contactEmail.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          console.log("Message sent: %s", info.messageId);
+          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          res.status(200).json({ status: "SUCCESS" });
+        }
+      });
+    }
+  });
+},
+{
+  timezone: "Asia/Kolkata"
+});
+
+
+
+//---------------------------------------------------------------- IT INPROCESS COMPLAINT --------------------------------
+
+
+
+const gmtCronSchedule3 = '07 13 * * *';
+
+cron.schedule(gmtCronSchedule3, () => {
+  const tomaillist3 = ["muthukumar@athulyaliving.com"];
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${gmtCronSchedule3}`);
+
+  const fromid = 'noreply@athulyaseniorcare.com';
+  const currentDate = new Date();
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+
+  const sql = `SELECT tblcomplaints.userId, tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails, tblcomplaints.todepartment, tblcomplaints.status, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, tblcomplaints.regDate, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.status = 'inprocess' AND tblcomplaints.todepartment = 'IT'`;
+
+  console.log(sql);
+
+  conn.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ status: "ERROR" });
+      return;
+    }
+
+    if (result.length === 0) {
+      const mail = {
+        from: fromid,
+        to: tomaillist2,
+        subject: `IT Inprocess Complaint List Date "${formattedDates}"`,
+        html: `
+          <p>IT Inprocess Complaint List</p>
+          <p>No data available "${formattedDates}"</p>`,
+      };
+
+      contactEmail.sendMail(mail, (error) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          res.json({ status: "Message Sent" });
+        }
+      });
+
+      return;
+    } else {
+      const mailOptions = {
+        from: fromid,
+        to: tomaillist3,
+        subject: `IT New Complaint List Date "${formattedDates}"`,
+        html: `
+          <html>
+            <head>
+              <style>
+                table {
+                  border: 1px solid #333;
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+                th, td {
+                  border: 1px solid #333;
+                  padding: 8px;
+                  text-align: left;
+                }
+                th {
+                  background-color: #f2f2f2;
+                }
+              </style>
+            </head>
+            <body>
+              <h1>IT Inprocess Complaint List</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>C.NO</th>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Complaint Type</th>
+                    <th>Department</th>
+                    <th style='white-space: nowrap'>Complaint Details</th>
+                    <th>Location</th>
+                    <th>Place</th>
+                    <th>Complaint Date</th> 
+                    <th>Status</th>                
+                  </tr>
+                </thead>
+                <tbody>
+                  ${result
+                    .map(row => {
+                      const date = new Date(row.regDate);
+                      const formattedDate = date.toISOString().slice(0, 10);
+                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+                      return `
+                        <tr>
+                          <td>${row.complaintNumber}</td>
+                          <td>${row.emp_id}</td>
+                          <td>${row.fullName}</td>
+                          <td>${row.complaintType}</td>
+                          <td>${row.fromdepartment}</td>
+                          <td>${detailsWithoutTags}</td>
+                          <td>${row.location}</td>
+                          <td>${row.place}</td>
+                          <td>${formattedDate}</td>
+                          <td>IN Process</td>
+                         
+                        </tr>
+                      `;
+                    })
+                    .join('')}
+                </tbody>
+              </table>
+            </body>
+          </html>
+        `,
+      };
+
+      contactEmail.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          console.log("Message sent: %s", info.messageId);
+          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          res.status(200).json({ status: "SUCCESS" });
+        }
+      });
+    }
+  });
+},
+{
+  timezone: "Asia/Kolkata"
+});
+
+
+
+
+
+// -------------------------------- CLOSED COMPLAINT  CRON JOBS  --------------------------------
+
+const gmtCronSchedule4 = '08 13 * * *';
+
+cron.schedule(gmtCronSchedule4, () => {
+  const tomaillist4 = ["muthukumar@athulyaliving.com"];
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${gmtCronSchedule4}`);
+
+  const fromid = 'noreply@athulyaseniorcare.com';
+  const currentDate = new Date();
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+
+  const sql = `SELECT tblcomplaints.userId, tblcomplaints.complaintNumber, tblcomplaints.complaintType, tblcomplaints.complaintDetails, tblcomplaints.todepartment, tblcomplaints.status, tblcomplaints.fromdepartment, tblcomplaints.location, tblcomplaints.place, tblcomplaints.regDate, users.fullName, users.emp_id FROM users INNER JOIN tblcomplaints ON tblcomplaints.userId = users.id WHERE tblcomplaints.status = 'closed' AND tblcomplaints.todepartment = 'IT'`;
+
+  console.log(sql);
+
+  conn.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ status: "ERROR" });
+      return;
+    }
+
+    if (result.length === 0) {
+      const mail = {
+        from: fromid,
+        to: tomaillist4,
+        subject: `IT New Complaint List Date "${formattedDates}"`,
+        html: `
+          <p>IT New Complaint List</p>
+          <p>No data available "${formattedDates}"</p>`,
+      };
+
+      contactEmail.sendMail(mail, (error) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          res.json({ status: "Message Sent" });
+        }
+      });
+
+      return;
+    } else {
+      const mailOptions = {
+        from: fromid,
+        to: tomaillist3,
+        subject: `IT New Complaint List Date "${formattedDates}"`,
+        html: `
+          <html>
+            <head>
+              <style>
+                table {
+                  border: 1px solid #333;
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+                th, td {
+                  border: 1px solid #333;
+                  padding: 8px;
+                  text-align: left;
+                }
+                th {
+                  background-color: #f2f2f2;
+                }
+              </style>
+            </head>
+            <body>
+              <h1>IT Inprocess Complaint List</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>C.NO</th>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Complaint Type</th>
+                    <th>Department</th>
+                    <th style='white-space: nowrap'>Complaint Details</th>
+                    <th>Location</th>
+                    <th>Place</th>
+                    <th>Complaint Date</th> 
+                    <th>Status</th>                
+                  </tr>
+                </thead>
+                <tbody>
+                  ${result
+                    .map(row => {
+                      const date = new Date(row.regDate);
+                      const formattedDate = date.toISOString().slice(0, 10);
+                      const detailsWithoutTags = he.decode(row.complaintDetails.replace(/<[^>]+>/g, ''));
+                      return `
+                        <tr>
+                          <td>${row.complaintNumber}</td>
+                          <td>${row.emp_id}</td>
+                          <td>${row.fullName}</td>
+                          <td>${row.complaintType}</td>
+                          <td>${row.fromdepartment}</td>
+                          <td>${detailsWithoutTags}</td>
+                          <td>${row.location}</td>
+                          <td>${row.place}</td>
+                          <td>${formattedDate}</td>
+                          <td>IN Process</td>
+                         
+                        </tr>
+                      `;
+                    })
+                    .join('')}
+                </tbody>
+              </table>
+            </body>
+          </html>
+        `,
+      };
+
+      contactEmail.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ status: "ERROR" });
+        } else {
+          console.log("Message sent: %s", info.messageId);
+          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          res.status(200).json({ status: "SUCCESS" });
+        }
+      });
+    }
+  });
+},
+{
+  timezone: "Asia/Kolkata"
+});
+
+
+
+
 
 
 
