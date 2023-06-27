@@ -229,7 +229,7 @@ const gmtCronSchedule2 = '54 20 * * *';
 console.log(`New complaint running cron:', ${gmtCronSchedule2}`);
 
 cron.schedule(gmtCronSchedule2, () => {
-  const tomaillist2 = ["muthukumar@athulyaliving.com"];
+  const tomaillist2 = ["muthukumar@athulyaliving.com","itteam@athulyaliving.com"];
   const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
   console.log(`Cron job ran at ${gmtCronSchedule2}`);
@@ -367,7 +367,7 @@ const gmtCronSchedule3 = '57 20 * * *';
 console.log(`In process running complaint cron:', ${gmtCronSchedule3}`);
 
 cron.schedule(gmtCronSchedule3, () => {
-  const tomaillist3 = ["muthukumar@athulyaliving.com"];
+  const tomaillist3 = ["muthukumar@athulyaliving.com","itteam@athulyaliving.com"];
   const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
   console.log(`Cron job ran at ${gmtCronSchedule3}`);
@@ -515,7 +515,7 @@ console.log(`Closed complaint running complaint cron:', ${gmtCronSchedule4}`);
 
 
 cron.schedule(gmtCronSchedule4, () => {
-  const tomaillist4 = ["muthukumar@athulyaliving.com"];
+  const tomaillist4 = ["muthukumar@athulyaliving.com","itteam@athulyaliving.com"];
   const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
   console.log(`Cron job ran at ${gmtCronSchedule4}`);
