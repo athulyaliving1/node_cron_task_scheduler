@@ -748,6 +748,51 @@ app.get("/leads", (req, res) => {
 });
 
 
+//----------------------------------------------------------------API Running check ---------------------------------------------
+
+const gmtCronSchedule5 = '52 09 * * *';
+
+console.log(`Checking Schedule: ${gmtCronSchedule5}`);
+
+
+cron.schedule(gmtCronSchedule5, ()  => {
+
+  const tomaillist5 = ["muthukumar@athulyaliving.com","itteam@athulyaliving.com"];
+  const nowIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const formattedDate = new Date(nowIST).toISOString().slice(0, 10);
+  console.log(`Cron job ran at ${gmtCronSchedule5}`);
+
+  const fromid = 'noreply@athulyaseniorcare.com';
+  const currentDate = new Date();
+  const formattedDates = currentDate.toISOString().slice(0, 10);
+
+ 
+  const mail = {
+    from: `${fromid}`,
+    to: `${tomaillist5}`,
+    subject:`cron job running at ${gmtCronSchedule5}`,
+    html: `
+    <p>Today cron job is running </p>
+    `
+  }
+  contactEmail.sendMail(mail, (error) => {
+    if (error) {
+      res.json({ status: "ERROR" });
+    } else {
+      res.json({ status: "Message Sent" });
+    }
+  });
+
+})
+
+
+
+
+
+
+
+
+
 
 // app.listen(port, () => console.log(`Listening on port ${port}..`));
 
