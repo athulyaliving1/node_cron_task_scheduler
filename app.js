@@ -750,7 +750,7 @@ app.get("/leads", (req, res) => {
 
 //----------------------------------------------------------------API Running check ---------------------------------------------
 
-const gmtCronSchedule5 = '52 09 * * *';
+const gmtCronSchedule5 = '02 10 * * *';
 
 console.log(`Checking Schedule: ${gmtCronSchedule5}`);
 
@@ -784,10 +784,6 @@ cron.schedule(gmtCronSchedule5, ()  => {
   });
 
 })
-
-
-
-
 
 
 
