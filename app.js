@@ -750,7 +750,7 @@ app.get("/leads", (req, res) => {
 
 //----------------------------------------------------------------API Running check ---------------------------------------------
 
-const gmtCronSchedule5 = '02 10 * * *';
+const gmtCronSchedule5 = '12 10 * * *';
 
 console.log(`Checking Schedule: ${gmtCronSchedule5}`);
 
