@@ -294,8 +294,10 @@ cron.schedule(gmtCronSchedule2, () => {
                   text-align: left;
                 }
                 th {
-                  background-color: #f2f2f2;
+                  background-color: #176291;
+                  color: #fff;
                 }
+                tr:nth-child(even) {background-color: #f2f2f2;}
               </style>
             </head>
             <body>
@@ -424,8 +426,10 @@ cron.schedule(gmtCronSchedule3, () => {
                   text-align: left;
                 }
                 th {
-                  background-color: #f2f2f2;
+                  background-color: #176291;
+                  color: #fff;
                 }
+                tr:nth-child(even) {background-color: #f2f2f2;}
               </style>
             </head>
             <body>
