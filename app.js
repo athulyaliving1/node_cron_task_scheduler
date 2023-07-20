@@ -406,13 +406,13 @@ console.log(`In process running complaint cron:', ${gmtCronSchedule3}`);
 cron.schedule(
   gmtCronSchedule3,
   () => {
-    // const tomaillist3 = [
-    //   "muthukumar@athulyaliving.com",
-    //   "itteam@athulyaliving.com",
-    // ];
-
     const tomaillist3 = [
-      "muthukumar@athulyaliving.com"];
+      "muthukumar@athulyaliving.com",
+      "itteam@athulyaliving.com",
+    ];
+
+    // const tomaillist3 = [
+    //   "muthukumar@athulyaliving.com"];
     const nowIST = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Kolkata",
     });
@@ -564,12 +564,12 @@ console.log(`Closed complaint running complaint cron:', ${gmtCronSchedule4}`);
 cron.schedule(
   gmtCronSchedule4,
   () => {
-    // const tomaillist4 = [
-    //   "muthukumar@athulyaliving.com",
-    //   "itteam@athulyaliving.com",
-    // ];
+    const tomaillist4 = [
+      "muthukumar@athulyaliving.com",
+      "itteam@athulyaliving.com",
+    ];
 
-    const tomaillist4 = ["muthukumar@athulyaliving.com"];
+    // const tomaillist4 = ["muthukumar@athulyaliving.com"];
     const nowIST = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Kolkata",
     });
@@ -757,11 +757,11 @@ console.log(`New Requirement running cron:', ${gmtCronSchedule6}`);
 cron.schedule(
   gmtCronSchedule6,
   () => {
-    const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    // const tomaillist2 = [
-    //   "muthukumar@athulyaliving.com",
-    //   "itteam@athulyaliving.com",
-    // ];
+    // const tomaillist2 = ["muthukumar@athulyaliving.com"];
+    const tomaillist2 = [
+      "muthukumar@athulyaliving.com",
+      "itteam@athulyaliving.com",
+    ];
     const nowIST = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Kolkata",
     });
@@ -914,11 +914,11 @@ console.log(`Inprocess Requirement  running cron:', ${gmtCronSchedule7}`);
 cron.schedule(
   gmtCronSchedule7,
   () => {
-    const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    // const tomaillist2 = [
-    //   "muthukumar@athulyaliving.com",
-    //   "itteam@athulyaliving.com",
-    // ];
+    // const tomaillist2 = ["muthukumar@athulyaliving.com"];
+    const tomaillist2 = [
+      "muthukumar@athulyaliving.com",
+      "itteam@athulyaliving.com",
+    ];
     const nowIST = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Kolkata",
     });
@@ -1071,11 +1071,11 @@ console.log(`Closed Requirement running cron:', ${gmtCronSchedule8}`);
 cron.schedule(
   gmtCronSchedule8,
   () => {
-    const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    // const tomaillist2 = [
-    //   "muthukumar@athulyaliving.com",
-    //   "itteam@athulyaliving.com",
-    // ];
+    // const tomaillist2 = ["muthukumar@athulyaliving.com"];
+    const tomaillist2 = [
+      "muthukumar@athulyaliving.com",
+      "itteam@athulyaliving.com",
+    ];
     const nowIST = new Date().toLocaleString("en-US",
       {
         timeZone: "Asia/Kolkata",
