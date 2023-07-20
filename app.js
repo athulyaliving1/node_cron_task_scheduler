@@ -649,7 +649,7 @@ cron.schedule(
 
 // ----------------------------------------------------------------IT New Requirement List ----------------------------------------------------------------
 
-const gmtCronSchedule6 = "23 11 * * *";
+const gmtCronSchedule6 = "55 08 * * *";
 
 console.log(`New Requirement running cron:', ${gmtCronSchedule6}`);
 
@@ -806,7 +806,7 @@ cron.schedule(
 );
 // ----------------------------------------------------------------IT Inprocess Requirement List ----------------------------------------------------------------
 
-const gmtCronSchedule7 = "41 11 * * *";
+const gmtCronSchedule7 = "57 08 * * *";
 
 console.log(`Inprocess Requirement  running cron:', ${gmtCronSchedule7}`);
 
@@ -963,7 +963,7 @@ cron.schedule(
 );
 // ----------------------------------------------------------------IT Closed Requirement List ----------------------------------------------------------------
 
-const gmtCronSchedule8 = "27 12 * * *";
+const gmtCronSchedule8 = "03 09 * * *";
 
 console.log(`Closed Requirement running cron:', ${gmtCronSchedule8}`);
 
