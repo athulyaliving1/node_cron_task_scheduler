@@ -70,7 +70,7 @@ var emailsignatureImageBase64 = "data:image/jpeg;base64,/9j/4gxYSUNDX1BST0ZJTEUA
 
 //Daily Task Update
 
-const gmtCronSchedule1 = "00 21 * * *"; // GMT time
+const gmtCronSchedule1 = "01 21 * * *"; // GMT time
 
 //New Complaint List
 const gmtCronSchedule2 = "45 20 * * *";
@@ -82,13 +82,13 @@ const gmtCronSchedule3 = "50 20 * * *";
 const gmtCronSchedule4 = "55 20 * * *";
 
 //IT New Requirement List 
-const gmtCronSchedule6 = "30 08 * * *";
+const gmtCronSchedule6 = "32 08 * * *";
 
 //IT Inprocess Requirement List 
 const gmtCronSchedule7 = "35 08 * * *";
 
 //IT Closed Requirement List
-const gmtCronSchedule8 = "30 20 * * *";
+const gmtCronSchedule8 = "35 20 * * *";
 
 
 //API Running check morning
