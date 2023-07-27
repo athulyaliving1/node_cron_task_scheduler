@@ -339,7 +339,7 @@ cron.schedule(
           </style>
             </head>
             <body>
-              <h1>Daily Report</h1>
+              <h1>IT New Complaint List Date "${formattedDates}"</h1>
               <table>
                 <thead>
                   <tr>
