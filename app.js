@@ -13,6 +13,7 @@ var usersRouter = require("./routes/users");
 const { error } = require("console");
 /** @type {*} */
 var app = express();
+const cronitor = require("cronitor")("7d96cf3ac4f64144bf005efd2514b38f");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -1369,6 +1370,14 @@ cron.schedule(gmtCronSchedule9, () => {
     }
   });
 });
+
+const monitor = new cronitor.Monitor("ezSGQZ");
+
+// send a heartbeat event with a message
+monitor.ping({ message: "Alive" });
+
+// include counts & error counts
+monitor.ping({ count: 100, error_count: 3 });
 
 // app.listen(port, () => console.log(`Listening on port ${port}..`));
 
