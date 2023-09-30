@@ -196,16 +196,16 @@ cron.schedule(
               </thead>
               <tbody>
               ${result
-                .map((row) => {
-                  const date = new Date(row.date);
-                  const formattedDate = date.toISOString().slice(0, 10);
-                  const detailsWithoutTags = he.decode(
-                    row.details.replace(/<[^>]+>/g, "")
-                  );
-                  const pendingWithoutTags = he.decode(
-                    row.pending.replace(/<[^>]+>/g, "")
-                  );
-                  return `
+              .map((row) => {
+                const date = new Date(row.date);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.details.replace(/<[^>]+>/g, "")
+                );
+                const pendingWithoutTags = he.decode(
+                  row.pending.replace(/<[^>]+>/g, "")
+                );
+                return `
                     <tr>
                       <td>${row.id}</td>
                       <td>${row.name}</td>
@@ -215,8 +215,8 @@ cron.schedule(
                       <td>${pendingWithoutTags}</td>
                     </tr>
                   `;
-                })
-                .join("")}
+              })
+              .join("")}
             </tbody>
             </table>
             <p>   <img src="${emailsignatureImageBase64}" alt="Signature" style="max-width: 700px;">   </p>
@@ -350,13 +350,13 @@ cron.schedule(
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.complaintDetails.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.complaintDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -369,8 +369,8 @@ cron.schedule(
                           <td>${formattedDate}</td>
                         </tr>
                       `;
-                    })
-                    .join("")}
+              })
+              .join("")}
                 </tbody>
               </table>
               <p>   <img src="${emailsignatureImageBase64}" alt="Signature" style="max-width: 700px;">   </p>
@@ -500,13 +500,13 @@ cron.schedule(
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.complaintDetails.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.complaintDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -522,8 +522,8 @@ cron.schedule(
                          
                         </tr>
                       `;
-                    })
-                    .join("")}
+              })
+              .join("")}
                 </tbody>
               </table>
               <p>   <img src="${emailsignatureImageBase64}" alt="Signature" style="max-width: 700px;"> </p>
@@ -561,7 +561,7 @@ cron.schedule(
   () => {
     const tomaillist4 = [
       "muthukumar@athulyaliving.com",
-      // "itteam@athulyaliving.com",
+      "itteam@athulyaliving.com",
     ];
 
     // const tomaillist4 = ["muthukumar@athulyaliving.com"];
@@ -660,13 +660,13 @@ cron.schedule(
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.complaintDetails.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.complaintDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
                         <tr>
                           <td>${row.complaintNumber}</td>
                           <td>${row.emp_id}</td>
@@ -682,8 +682,8 @@ cron.schedule(
                          
                         </tr>
                       `;
-                    })
-                    .join("")}
+              })
+              .join("")}
                 </tbody>
               </table>
               <p>   <img src="${emailsignatureImageBase64}" alt="Signature" style="max-width: 700px;">   </p>
@@ -816,13 +816,13 @@ cron.schedule(
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.reqDetails.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.reqDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
                         <tr>
                           <td>${row.reqNumber}</td>
                           <td>${row.emp_id}</td>
@@ -835,8 +835,8 @@ cron.schedule(
                           <td>${formattedDate}</td>
                         </tr>
                       `;
-                    })
-                    .join("")}                      
+              })
+              .join("")}                      
                 </tbody>
               </table>
               <p>
@@ -972,13 +972,13 @@ cron.schedule(
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.regDate);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.reqDetails.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.reqDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
                         <tr>
                           <td>${row.reqNumber}</td>
                           <td>${row.emp_id}</td>
@@ -993,8 +993,8 @@ cron.schedule(
                           <td>In Process</td>
                         </tr>
                       `;
-                    })
-                    .join("")}                      
+              })
+              .join("")}                      
                 </tbody>
               </table>
               <p>
@@ -1130,13 +1130,13 @@ cron.schedule(
   </thead>
   <tbody>
     ${result
-      .map((row) => {
-        const date = new Date(row.regDate);
-        const formattedDate = date.toISOString().slice(0, 10);
-        const detailsWithoutTags = he.decode(
-          row.reqDetails.replace(/<[^>]+>/g, "")
-        );
-        return `
+              .map((row) => {
+                const date = new Date(row.regDate);
+                const formattedDate = date.toISOString().slice(0, 10);
+                const detailsWithoutTags = he.decode(
+                  row.reqDetails.replace(/<[^>]+>/g, "")
+                );
+                return `
           <tr>
             <td>${row.reqNumber}</td>
             <td>${row.emp_id}</td>
@@ -1151,8 +1151,8 @@ cron.schedule(
             <td>Closed</td>
           </tr>
         `;
-      })
-      .join("")}                      
+              })
+              .join("")}                      
   </tbody>
 </table>
 
@@ -1264,16 +1264,16 @@ app.get("/leads", (req, res) => {
                 </thead>
                 <tbody>
                   ${result
-                    .map((row) => {
-                      const date = new Date(row.date);
-                      const formattedDate = date.toISOString().slice(0, 10);
-                      const detailsWithoutTags = he.decode(
-                        row.details.replace(/<[^>]+>/g, "")
-                      );
-                      const pendingWithoutTags = he.decode(
-                        row.pending.replace(/<[^>]+>/g, "")
-                      );
-                      return `
+            .map((row) => {
+              const date = new Date(row.date);
+              const formattedDate = date.toISOString().slice(0, 10);
+              const detailsWithoutTags = he.decode(
+                row.details.replace(/<[^>]+>/g, "")
+              );
+              const pendingWithoutTags = he.decode(
+                row.pending.replace(/<[^>]+>/g, "")
+              );
+              return `
                         <tr>
                           <td>${row.id}</td>
                           <td>${row.name}</td>
@@ -1283,8 +1283,8 @@ app.get("/leads", (req, res) => {
                           <td>${pendingWithoutTags}</td>
                         </tr>
                       `;
-                    })
-                    .join("")}
+            })
+            .join("")}
                 </tbody>
               </table>
             </body>
