@@ -720,7 +720,7 @@ cron.schedule(
   gmtCronSchedule6,
   () => {
     // const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    const tomaillist2 = [
+    const tomaillist6 = [
       "muthukumar@athulyaliving.com",
       "itteam@athulyaliving.com",
     ];
@@ -749,7 +749,7 @@ cron.schedule(
       if (!result || result.length === 0) {
         const mail = {
           from: `${fromid}`,
-          to: tomaillist2,
+          to: tomaillist6,
           subject: `IT New Requirement List Date "${formattedDate}"`,
           html: `
           <p>IT New Requirement List</p>
@@ -769,7 +769,7 @@ cron.schedule(
       } else {
         const mailOptions = {
           from: fromid,
-          to: tomaillist2,
+          to: tomaillist6,
           subject: `IT New Requirement List Date "${formattedDates}"`,
           html: `
           <html>
@@ -872,7 +872,7 @@ cron.schedule(
   gmtCronSchedule7,
   () => {
     // const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    const tomaillist2 = [
+    const tomaillist7 = [
       "muthukumar@athulyaliving.com",
       "itteam@athulyaliving.com",
     ];
@@ -903,7 +903,7 @@ cron.schedule(
       if (!result || result.length === 0) {
         const mail = {
           from: `${fromid}`,
-          to: tomaillist2,
+          to: tomaillist7,
           subject: `IT Inprocess Requirement List Date "${formattedDate}"`,
           html: `
           <p>IT New Inprocess Requirement List</p>
@@ -923,7 +923,7 @@ cron.schedule(
       } else {
         const mailOptions = {
           from: fromid,
-          to: tomaillist2,
+          to: tomaillist7,
           subject: `IT Inprocess Requirement List Date "${formattedDates}"`,
           html: `
           <html>
@@ -1030,7 +1030,7 @@ cron.schedule(
   gmtCronSchedule8,
   () => {
     // const tomaillist2 = ["muthukumar@athulyaliving.com"];
-    const tomaillist2 = [
+    const tomaillist8 = [
       "muthukumar@athulyaliving.com",
       "itteam@athulyaliving.com",
     ];
@@ -1061,7 +1061,7 @@ cron.schedule(
       if (!result || result.length === 0) {
         const mail = {
           from: `${fromid}`,
-          to: tomaillist2,
+          to: tomaillist8,
           subject: `IT Closed Requirement List Date "${formattedDate}"`,
           html: `
           <p>IT Closed Requirement List</p>
@@ -1081,7 +1081,7 @@ cron.schedule(
       } else {
         const mailOptions = {
           from: fromid,
-          to: tomaillist2,
+          to: tomaillist8,
           subject: `IT Closed Requirement List Date "${formattedDates}"`,
           html: `
           <html>
@@ -1311,7 +1311,7 @@ app.get("/leads", (req, res) => {
 console.log(`Checking Schedule: ${gmtCronSchedule5}`);
 
 cron.schedule(gmtCronSchedule5, () => {
-  const tomaillist5 = "muthukumar@athulyaliving.com";
+  const tomaillist11 = "muthukumar@athulyaliving.com";
   const nowIST = new Date().toLocaleString("en-US", {
     timeZone: "Asia/Kolkata",
   });
@@ -1324,7 +1324,7 @@ cron.schedule(gmtCronSchedule5, () => {
 
   const mail = {
     from: `${fromid}`,
-    to: `${tomaillist5}`,
+    to: `${tomaillist11}`,
     subject: `cron job running at ${formattedDates}`,
     html: `
     <p>Today cron job is running ${formattedDates}</p>
